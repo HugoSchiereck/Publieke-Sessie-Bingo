@@ -9,7 +9,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
       background: linear-gradient(145deg, #f0f4f8, #ffffff);
-      padding: 2rem;
+      padding: 1rem;
       margin: 0;
     }
     h1 {
@@ -23,6 +23,26 @@
       gap: 8px;
       max-width: 700px;
       margin: 2rem auto;
+    }
+    @media (max-width: 768px) {
+      #bingo {
+        max-width: 95vw;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .cell {
+        font-size: 0.9rem;
+        padding: 1rem 0.5rem;
+        min-height: 100px;
+      }
+    }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      .cell input {
+        font-size: 0.75rem;
+        padding: 4px;
+      }
     }
     .cell {
       background: #fff;
@@ -140,3 +160,6 @@
   </script>
 </body>
 </html>
+<script>
+  // Initial card generation
+  generateCard();
