@@ -24,76 +24,13 @@
       max-width: 700px;
       margin: 2rem auto;
     }
-    @media (max-width: 768px) {
-  #bingo {
-    max-width: 95vw;
-    grid-template-columns: repeat(5, 1fr);
-  }
-  .cell {
-    font-size: 0.85rem;
-    padding: 0.5rem;
-    min-height: 90px;
-  }
-}
-.cell {
-  font-size: 0.9rem;
-  padding: 0.75rem;
-  min-height: 90px;
-}
-.cell {
-  font-size: 0.9rem;
-  padding: 1rem 0.5rem;
-  min-height: 100px;
-}
-    @media (max-width: 480px) {
-  h1 {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-  }
-  #bingo {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-  }
-  .cell {
-    font-size: 0.8rem;
-    padding: 0.4rem;
-    min-height: 80px;
-  }
-  .cell input {
-    font-size: 0.7rem;
-    padding: 4px;
-  }
-  button {
-    width: 90%;
-    font-size: 0.95rem;
-  }
-}
-  #bingo {
-    grid-template-columns: repeat(1, 1fr);
-  }
-  .cell {
-    font-size: 0.85rem;
-    padding: 0.5rem;
-    min-height: 80px;
-  }
-  .cell input {
-    font-size: 0.75rem;
-.cell input {
-  font-size: 0.75rem;
-  padding: 4px;
-}
-button {
-  width: 90%;
-  font-size: 0.95rem;
-}
-.cell input {
-  font-size: 0.75rem;
-  padding: 4px;
-}
+    .cell {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #fff;
       border: 2px solid #ddd;
       border-radius: 8px;
-      padding: 0.75rem;
-      min-height: 110px;
+      padding: 0.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -101,6 +38,7 @@ button {
       text-align: center;
       transition: all 0.2s ease;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      font-size: 0.85rem;
     }
     .cell:hover {
       transform: scale(1.02);
@@ -110,7 +48,7 @@ button {
       margin-top: 0.5rem;
       width: 80%;
       padding: 6px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       border: 1px solid #ccc;
       border-radius: 4px;
       text-align: center;
@@ -133,9 +71,50 @@ button {
     button:hover {
       background: #43a047;
     }
+    /* Popup styling */
+    #popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    #popup-content {
+      background: white;
+      padding: 2rem;
+      max-width: 90%;
+      border-radius: 10px;
+      text-align: left;
+    }
+    #popup-content h2 {
+      margin-top: 0;
+    }
+    #close-popup {
+      margin-top: 1rem;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+  <div id="popup">
+    <div id="popup-content">
+      <h2>Welkom bij de Open-ICT Bingo!</h2>
+      <p>Loop langs de projecten en probeer bingo te halen. Elk vakje bevat iets wat je kunt ontdekken of navragen bij een groep.</p>
+      <p>Heb je een rij vol? Vul de groepnummers in en laat het zien bij de organisatoren om je bingo te laten controleren!</p>
+      <button id="close-popup">Start</button>
+    </div>
+  </div>
+
   <h1>🎯 Open-ICT Bingo</h1>
   <div id="bingo"></div>
   <button onclick="generateCard()">Genereer nieuwe kaart</button>
@@ -198,6 +177,10 @@ button {
 
         grid.appendChild(cell);
       });
+    }
+
+    document.getElementById("close-popup").onclick = function() {
+      document.getElementById("popup").style.display = "none";
     }
 
     generateCard();
