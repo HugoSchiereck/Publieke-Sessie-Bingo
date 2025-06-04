@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open-ICT Bingo Generator</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #f9f9f9; padding: 2rem; }
+    h1 { margin-bottom: 1rem; }
+    #bingo { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; max-width: 500px; margin: 1rem auto; }
+    .cell {
+      background: white;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      min-height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .marked { background: #d0f0d0; }
+    button { padding: 0.5rem 1rem; font-size: 1rem; margin-top: 1rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🎯 Open-ICT Bingo</h1>
+  <div id="bingo"></div>
+  <button onclick="generateCard()">Genereer nieuwe kaart</button>
+
+  <script>
+    const items = [
+      "Gebruikt AI in het project", "Heeft een werkende mobiele app", "Project gemaakt in Figma",
+      "Maakt gebruik van een API", "Frontend in React of Flutter", "Backend met Node.js of Python",
+      "Data-analyse of dashboards", "Project voor echte opdrachtgever", "Game of simulatie gemaakt",
+      "CI/CD gebruikt", "Project gericht op duurzaamheid", "Team van 3 of meer personen",
+      "Iemand pitchte het project live", "Er is een usability test gedaan",
+      "Er is iets fout gegaan maar goed opgelost", "Gemaakt met een no-code tool",
+      "Iemand gebruikte een Raspberry Pi of sensor", "Bezoekers kunnen iets uitproberen",
+      "Project draait in de cloud", "Student is trots op wat niet gelukt is",
+      "Er zijn gebruikersinterviews gedaan", "Er zit een game-element in",
+      "UX staat centraal in dit project", "Heeft ook een promotievideo of poster",
+      "Bevat een eigen ontworpen logo"
+    ];
+
+    function generateCard() {
+      const shuffled = [...items].sort(() => 0.5 - Math.random()).slice(0, 24);
+      shuffled.splice(12, 0, "🎯 Vrij vak");
+
+      const grid = document.getElementById("bingo");
+      grid.innerHTML = "";
+
+      shuffled.forEach(text => {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.textContent = text;
+        cell.onclick = () => cell.classList.toggle("marked");
+        grid.appendChild(cell);
+      });
+    }
+
+    generateCard();
+  </script>
+</body>
+</html>
