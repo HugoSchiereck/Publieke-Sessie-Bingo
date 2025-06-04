@@ -74,23 +74,23 @@
       const grid = document.getElementById("bingo");
       grid.innerHTML = "";
 
-      shuffled.forEach(text => {
+      shuffled.forEach((text, index) => {
         const cell = document.createElement("div");
         cell.className = "cell";
 
         const label = document.createElement("div");
         label.textContent = text;
-
-        const input = document.createElement("input");
-        input.type = "text";
-        input.placeholder = "Groepnummer";
-
         cell.appendChild(label);
-        cell.appendChild(input);
+
+        if (index !== 12) { // geen inputveld voor het middelste vak
+          const input = document.createElement("input");
+          input.type = "text";
+          input.placeholder = "Groepnr";
+          cell.appendChild(input);
+        }
 
         cell.onclick = (e) => {
-          // voorkom toggling bij klikken op inputveld
-          if (e.target !== input) cell.classList.toggle("marked");
+          if (e.target.tagName !== "INPUT") cell.classList.toggle("marked");
         };
 
         grid.appendChild(cell);
