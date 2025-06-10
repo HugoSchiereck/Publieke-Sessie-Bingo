@@ -23,6 +23,7 @@
       font-size: 2rem;
     }
     #bingo {
+<<<<<<< HEAD
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 6px;
@@ -50,6 +51,30 @@
   box-sizing: border-box;
   overflow-wrap: anywhere;
 }
+=======
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      max-width: 700px;
+      margin: 2rem auto;
+    }
+    .cell {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      font-size: 0.85rem;
+    }
+>>>>>>> parent of 0f3be99 (overlap reduced)
     .cell:hover {
       transform: scale(1.02);
       border-color: #88c;
