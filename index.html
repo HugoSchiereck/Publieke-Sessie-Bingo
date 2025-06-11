@@ -6,12 +6,17 @@
   <title>Open-ICT Bingo Generator</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
-      background: linear-gradient(145deg, #f0f4f8, #ffffff);
-      padding: 1rem;
-      margin: 0;
-    }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  background: linear-gradient(145deg, #f0f4f8, #ffffff);
+  padding: 1rem;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
     h1 {
       margin-bottom: 1rem;
       color: #333;
@@ -20,41 +25,45 @@
     #bingo {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-  max-width: 700px;
-  margin: 2rem auto;
-  padding: 0.5rem;
+  gap: 6px;
+  width: fit-content;
+  margin: 1rem auto;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
 }
     .cell {
   width: 100%;
   aspect-ratio: 1 / 1;
   background: #fff;
   border: 2px solid #ddd;
-  border-radius: 8px;
-  padding: 0.75rem;
+  border-radius: 6px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  font-size: 0.85rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  font-size: 0.75rem;
   box-sizing: border-box;
+  overflow-wrap: anywhere;
 }
     .cell:hover {
       transform: scale(1.02);
       border-color: #88c;
     }
     .cell input {
-      margin-top: 0.5rem;
-      width: 80%;
-      padding: 6px;
-      font-size: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      text-align: center;
-    }
+  margin-top: 0.3rem;
+  width: 100%;
+  padding: 3px;
+  font-size: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  text-align: center;
+  box-sizing: border-box;
+}
     .marked {
       background: #d0f0d0;
       border-color: #4caf50;
@@ -182,18 +191,11 @@
     }
 
     document.getElementById("close-popup").onclick = function() {
-      document.getElementById("popup").style.display = "none";
-    }
+  document.getElementById("popup").style.display = "none";
+} 
+
 
     generateCard();
-  </script>
-  <script>
-    // Sluit de popup als je op Escape drukt
-    document.addEventListener("keydown", function(event) {
-      if (event.key === "Escape") {
-        document.getElementById("popup").style.display = "none";
-      }
-    });
   </script>
 </body>
 </html>
