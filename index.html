@@ -26,11 +26,11 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 6px;
-  width: fit-content;
+  width: 100%;
+  max-width: 360px;
   margin: 1rem auto;
   padding: 0;
   box-sizing: border-box;
-  justify-content: center;
 }
     .cell {
   width: 100%;
@@ -124,7 +124,6 @@
       <p>Heb je een rij vol? Vul de groepnummers in en laat het zien bij de organisatoren om je bingo te laten controleren!</p>
       <p><strong>Regels:</strong> Als je bingo hebt gehaald, moet je hardop bingo hebben gezegd voordat je naar de organisatie mag. Foute bingo is natuurlijk een liedje zingen! </p>
       <p>Veel plezier!</p>
-
       <button id="close-popup">Start</button>
     </div>
   </div>
@@ -195,8 +194,8 @@
 
     document.getElementById("close-popup").onclick = function() {
   document.getElementById("popup").style.display = "none";
-} 
-
+};
+    // Initial card generation
 
     generateCard();
   </script>
