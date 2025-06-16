@@ -303,17 +303,20 @@
 
       function checkBingo() {
         const cells = Array.from(document.querySelectorAll("#bingo .cell"));
-        const gridSize = Math.sqrt(cells.length); // 5 of 2 (op mobiel)
+        const total = cells.length;
 
-        // Bouw een matrix met gemarkeerde status
-        const marked = [];
-        for (let i = 0; i < gridSize; i++) {
-          marked[i] = [];
-          for (let j = 0; j < gridSize; j++) {
-            const cellIndex = i * gridSize + j;
-            marked[i][j] = cells[cellIndex].classList.contains("marked");
-          }
-        }
+        // Bepaal kolombreedte op basis van scherm (matching CSS)
+        const isMobile = window.innerWidth <= 600;
+        const columns = isMobile ? 2 : 5;
+        const rows = Math.ceil(total / columns);
+
+        // Bouw matrix van gemarkeerde cellen
+        const marked = Array.from({ length: rows }, (_, i) =>
+          Array.from({ length: columns }, (_, j) => {
+            const index = i * columns + j;
+            return cells[index]?.classList.contains("marked") || false;
+          })
+        );
 
         // Check rijen
         for (let row of marked) {
@@ -321,27 +324,18 @@
         }
 
         // Check kolommen
-        for (let col = 0; col < gridSize; col++) {
+        for (let col = 0; col < columns; col++) {
           if (marked.every((row) => row[col])) return showBingoResult(true);
         }
 
-        // Check diagonalen
-        if (marked.every((row, i) => row[i])) return showBingoResult(true);
-        if (marked.every((row, i) => row[gridSize - 1 - i]))
-          return showBingoResult(true);
+        // Check diagonalen (alleen als het een vierkant is)
+        if (rows === columns) {
+          if (marked.every((row, i) => row[i])) return showBingoResult(true);
+          if (marked.every((row, i) => row[columns - 1 - i]))
+            return showBingoResult(true);
+        }
 
         return showBingoResult(false);
-      }
-
-      function showBingoResult(success) {
-        const result = document.getElementById("bingo-result");
-        if (success) {
-          result.textContent = "🎉 BINGO! Meld je bij de organisatie!";
-          result.style.color = "#4caf50";
-        } else {
-          result.textContent = "Nog geen bingo...";
-          result.style.color = "#e53935";
-        }
       }
       // Initial card generation
 
