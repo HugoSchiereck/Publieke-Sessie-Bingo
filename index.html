@@ -367,7 +367,7 @@
         if (success) {
           result.textContent = "🎉 BINGO! Meld je bij de organisatie!";
           result.classList.add("confetti-pop");
-          launchConfetti();
+          launchConfetti(100,5000);
         } else {
           result.textContent = "Nog geen bingo...";
           result.style.color = "#e53935";
@@ -412,7 +412,7 @@
 
         return showBingoResult(false);
       }
-      function launchConfetti(amount = 30) {
+      function launchConfetti(amount = 100, duration = 3000) {
         const colors = [
           "#ff1744",
           "#fdd835",
@@ -421,7 +421,15 @@
           "#f06292",
           "#ffd600",
         ];
-        for (let i = 0; i < amount; i++) {
+        const interval = 100; // tijd tussen confetti-start (ms)
+        let launched = 0;
+
+        const launchInterval = setInterval(() => {
+          if (launched >= amount) {
+            clearInterval(launchInterval);
+            return;
+          }
+
           const confetti = document.createElement("div");
           confetti.className = "confetti";
           confetti.style.left = Math.random() * 100 + "vw";
@@ -429,11 +437,13 @@
             colors[Math.floor(Math.random() * colors.length)];
           confetti.style.width = confetti.style.height =
             Math.random() < 0.5 ? "8px" : "12px";
-          confetti.style.animationDuration = 2 + Math.random() * 2 + "s";
+          confetti.style.animationDuration = 3 + Math.random() * 2 + "s";
 
           document.body.appendChild(confetti);
-          setTimeout(() => confetti.remove(), 4000); // opruimen na animatie
-        }
+          setTimeout(() => confetti.remove(), 5000);
+
+          launched++;
+        }, interval);
       }
 
       // Initial card generation
