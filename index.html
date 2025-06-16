@@ -201,6 +201,11 @@
     </p>
     <div id="bingo"></div>
     <button onclick="generateCard()">Genereer nieuwe kaart</button>
+    <button onclick="checkBingo()">Check bingo</button>
+    <p
+      id="bingo-result"
+      style="font-weight: bold; font-size: 1.2rem; margin-top: 1rem"
+    ></p>
 
     <script>
       const items = [
@@ -294,6 +299,50 @@
       document.getElementById("close-popup").onclick = function () {
         document.getElementById("popup").style.display = "none";
       };
+      // Initialiseer de bingo kaart bij het laden van de pagina
+
+      function checkBingo() {
+        const cells = Array.from(document.querySelectorAll("#bingo .cell"));
+        const gridSize = Math.sqrt(cells.length); // 5 of 2 (op mobiel)
+
+        // Bouw een matrix met gemarkeerde status
+        const marked = [];
+        for (let i = 0; i < gridSize; i++) {
+          marked[i] = [];
+          for (let j = 0; j < gridSize; j++) {
+            const cellIndex = i * gridSize + j;
+            marked[i][j] = cells[cellIndex].classList.contains("marked");
+          }
+        }
+
+        // Check rijen
+        for (let row of marked) {
+          if (row.every(Boolean)) return showBingoResult(true);
+        }
+
+        // Check kolommen
+        for (let col = 0; col < gridSize; col++) {
+          if (marked.every((row) => row[col])) return showBingoResult(true);
+        }
+
+        // Check diagonalen
+        if (marked.every((row, i) => row[i])) return showBingoResult(true);
+        if (marked.every((row, i) => row[gridSize - 1 - i]))
+          return showBingoResult(true);
+
+        return showBingoResult(false);
+      }
+
+      function showBingoResult(success) {
+        const result = document.getElementById("bingo-result");
+        if (success) {
+          result.textContent = "🎉 BINGO! Meld je bij de organisatie!";
+          result.style.color = "#4caf50";
+        } else {
+          result.textContent = "Nog geen bingo...";
+          result.style.color = "#e53935";
+        }
+      }
       // Initial card generation
 
       generateCard();
