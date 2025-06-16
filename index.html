@@ -237,7 +237,10 @@
         const shuffled = [...items]
           .sort(() => 0.5 - Math.random())
           .slice(0, 24);
-        shuffled.splice(12, 0, "🎯 Vrij vak");
+        const isMobile = window.innerWidth <= 600;
+        if (!isMobile) {
+          shuffled.splice(12, 0, "🎯 Vrij vak");
+        }
 
         const grid = document.getElementById("bingo");
         grid.innerHTML = "";
