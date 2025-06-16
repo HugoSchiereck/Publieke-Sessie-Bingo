@@ -163,6 +163,29 @@
           aspect-ratio: 1 / 1.05; /* iets platter dan vierkant */
         }
       }
+      @keyframes bingoCelebrate {
+        0% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(1.1) rotate(1deg);
+        }
+        50% {
+          transform: scale(1.15) rotate(-1deg);
+        }
+        75% {
+          transform: scale(1.1) rotate(1deg);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .bingo-animate {
+        animation: bingoCelebrate 0.6s ease;
+        color: #2e7d32;
+        text-shadow: 0 0 10px #4caf50;
+      }
     </style>
   </head>
   <body>
@@ -300,6 +323,19 @@
         document.getElementById("popup").style.display = "none";
       };
       // Initialiseer de bingo kaart bij het laden van de pagina
+
+      function showBingoResult(success) {
+        const result = document.getElementById("bingo-result");
+        result.classList.remove("bingo-animate"); // reset animatie
+
+        if (success) {
+          result.textContent = "🎉 BINGO! Meld je bij de organisatie!";
+          result.classList.add("bingo-animate");
+        } else {
+          result.textContent = "Nog geen bingo...";
+          result.style.color = "#e53935";
+        }
+      }
 
       function checkBingo() {
         const cells = Array.from(document.querySelectorAll("#bingo .cell"));
