@@ -1,203 +1,276 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open-ICT Bingo Generator</title>
-  <style>
-    body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  background: linear-gradient(145deg, #f0f4f8, #ffffff);
-  padding: 1rem;
-  margin: 0;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-}
-    h1 {
-      margin-bottom: 1rem;
-      color: #333;
-      font-size: 2rem;
-    }
-    #bingo {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
-  width: 100%;
-  max-width: 360px;
-  margin: 1rem auto;
-  padding: 0;
-  box-sizing: border-box;
-}
-    .cell {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background: #fff;
-  border: 2px solid #ddd;
-  border-radius: 6px;
-  padding: 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  font-size: 0.75rem;
-  box-sizing: border-box;
-  overflow-wrap: anywhere;
-}
-    .cell:hover {
-      transform: scale(1.02);
-      border-color: #88c;
-    }
-    .cell input {
-  margin-top: 0.3rem;
-  width: 100%;
-  padding: 3px;
-  font-size: 0.7rem;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  text-align: center;
-  box-sizing: border-box;
-}
-    .marked {
-      background: #d0f0d0;
-      border-color: #4caf50;
-    }
-    button {
-      background: #4caf50;
-      color: white;
-      border: none;
-      padding: 0.7rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 1rem;
-      transition: background 0.2s ease;
-    }
-    button:hover {
-      background: #43a047;
-    }
-    /* Popup styling */
-    #popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    #popup-content {
-      background: white;
-      padding: 2rem;
-      max-width: 90%;
-      border-radius: 10px;
-      text-align: left;
-    }
-    #popup-content h2 {
-      margin-top: 0;
-    }
-    #close-popup {
-      margin-top: 1rem;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <div id="popup">
-    <div id="popup-content">
-      <h2>Welkom bij de Open-ICT Bingo!</h2>
-      <p>Loop langs de projecten en probeer bingo te halen. Elk vakje bevat iets wat je kunt ontdekken of navragen bij een groep.</p>
-      <p>Heb je een rij vol? Vul de groepnummers in en laat het zien bij de organisatoren om je bingo te laten controleren!</p>
-      <p><strong>Regels:</strong> Als je bingo hebt gehaald, moet je hardop bingo hebben gezegd voordat je naar de organisatie mag. Foute bingo is natuurlijk een liedje zingen! </p>
-      <p>Veel plezier!</p>
-      <button id="close-popup">Start</button>
-    </div>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open-ICT Bingo Generator</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center;
+        background: linear-gradient(145deg, #f0f4f8, #ffffff);
+        padding: 1rem;
+        margin: 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+      h1 {
+        margin-bottom: 1rem;
+        color: #333;
+        font-size: 2rem;
+      }
+      #bingo {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+        width: 100%;
+        max-width: 360px;
+        margin: 1rem auto;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .cell {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        background: #fff;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        padding: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        font-size: 0.75rem;
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+      }
+      .cell:hover {
+        transform: scale(1.02);
+        border-color: #88c;
+      }
+      .cell input {
+        margin-top: 0.3rem;
+        width: 100%;
+        padding: 3px;
+        font-size: 0.7rem;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      .marked {
+        background: #d0f0d0;
+        border-color: #4caf50;
+      }
+      button {
+        background: #4caf50;
+        color: white;
+        border: none;
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: background 0.2s ease;
+      }
+      button:hover {
+        background: #43a047;
+      }
+      /* Popup styling */
+      #popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      #popup-content {
+        background: white;
+        padding: 2rem;
+        max-width: 90%;
+        border-radius: 10px;
+        text-align: left;
+      }
+      #popup-content h2 {
+        margin-top: 0;
+      }
+      #close-popup {
+        margin-top: 1rem;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-  <h1>🎯 Open-ICT Bingo</h1>
-  <div id="bingo"></div>
-  <button onclick="generateCard()">Genereer nieuwe kaart</button>
+      #mobile-instruction {
+        font-size: 0.95rem;
+        color: #444;
+        margin-bottom: 0.5rem;
+        display: none; /* standaard verborgen */
+      }
 
-  <script>
-    const items = [
-      // Technische items
-      "Gebruikt AI in het project", "Heeft een werkende mobiele app", "Project gemaakt in Figma",
-      "Maakt gebruik van een API", "Frontend in React of Flutter", "Backend met Node.js of Python",
-      "Data-analyse of dashboards", "Project voor echte opdrachtgever", "Game of simulatie gemaakt",
-      "CI/CD gebruikt", "Project gericht op duurzaamheid", "Team van 3 of meer personen",
-      "Iemand pitchte het project live", "Er is een usability test gedaan",
-      "Er is iets fout gegaan maar goed opgelost", "Gemaakt met een no-code tool",
-      "Iemand gebruikte een Raspberry Pi of sensor", "Bezoekers kunnen iets uitproberen",
-      "Project draait in de cloud", "Student is trots op wat niet gelukt is",
-      "Er zijn gebruikersinterviews gedaan", "Er zit een game-element in",
-      "UX staat centraal in dit project", "Heeft ook een promotievideo of poster",
-      "Bevat een eigen ontworpen logo",
-
-      // Toegankelijke/algemene items
-      "Je kunt hier iets uitproberen", "Ze hebben met echte mensen getest",
-      "Iemand in dit groepje heeft gepitcht", "Ze hebben samen met een bedrijf gewerkt",
-      "Ze hebben het mooi ontworpen in een ontwerpprogramma", "Ze hebben geprobeerd het simpeler te maken",
-      "Je kunt zien wat er met je data gebeurt", "Iemand vertelt graag over de techniek erachter",
-      "Je ziet iets bewegen of reageren op input", "Ze hebben feedback gevraagd aan anderen",
-      "Iemand in dit groepje had nog nooit eerder geprogrammeerd",
-      "Het idee lost een sociaal of maatschappelijk probleem op",
-      "Ze hebben bewust gekozen om iets níet te bouwen", "Er is ook nagedacht over privacy",
-      "Je kunt zélf iets bedienen of klikken", "Er is gewerkt met beelden, geluid of animatie",
-      "Je ziet verschillende schermen of versies", "Ze hebben zelf een logo of naam ontworpen",
-      "Het werkt via het internet (cloud)", "Je krijgt een aanbeveling of persoonlijk advies van de app",
-      "Ze hebben een spelletje of spelelement ingebouwd", "Iemand legt je graag uit hoe het werkt onder de motorkap"
-    ];
-
-    function generateCard() {
-      const shuffled = [...items].sort(() => 0.5 - Math.random()).slice(0, 24);
-      shuffled.splice(12, 0, "🎯 Vrij vak");
-
-      const grid = document.getElementById("bingo");
-      grid.innerHTML = "";
-
-      shuffled.forEach((text, index) => {
-        const cell = document.createElement("div");
-        cell.className = "cell";
-
-        const label = document.createElement("div");
-        label.textContent = text;
-        cell.appendChild(label);
-
-        if (index !== 12) {
-          const input = document.createElement("input");
-          input.type = "text";
-          input.placeholder = "Groepnr";
-          cell.appendChild(input);
+      @media (max-width: 600px) {
+        #bingo {
+          grid-template-columns: repeat(2, 1fr);
+          max-width: 95vw;
         }
 
-        cell.onclick = (e) => {
-          if (e.target.tagName !== "INPUT") cell.classList.toggle("marked");
-        };
+        .cell {
+          font-size: 0.85rem;
+          aspect-ratio: 1 / 1.1;
+        }
 
-        grid.appendChild(cell);
-      });
-    }
+        .cell input {
+          font-size: 0.75rem;
+        }
+        #mobile-instruction {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="popup">
+      <div id="popup-content">
+        <h2>Welkom bij de Open-ICT Bingo!</h2>
+        <p>
+          Loop langs de projecten en probeer bingo te halen. Elk vakje bevat
+          iets wat je kunt ontdekken of navragen bij een groep.
+        </p>
+        <p>
+          Heb je een rij vol? Vul de groepnummers in en laat het zien bij de
+          organisatoren om je bingo te laten controleren!
+        </p>
+        <p>
+          <strong>Regels:</strong> Als je bingo hebt gehaald, moet je hardop
+          bingo hebben gezegd voordat je naar de organisatie mag. Foute bingo is
+          natuurlijk een liedje zingen!
+        </p>
+        <p>Veel plezier!</p>
+        <button id="close-popup">Start</button>
+      </div>
+    </div>
 
-    document.getElementById("close-popup").onclick = function() {
-  document.getElementById("popup").style.display = "none";
-};
-    // Initial card generation
+    <h1>🎯 Open-ICT Bingo</h1>
+    <p id="mobile-instruction">
+      Tik een vakje aan als je het hebt gevonden. Vul het groepnummer in als
+      bewijs!
+    </p>
+    <p id="desktop-instruction">
+      Klik op een vakje om het te markeren. Vul het groepnummer in als bewijs!
+    </p>
+    <p>
+      Loop langs de projecten en probeer bingo te halen. Elk vakje bevat iets
+      wat je kunt ontdekken of navragen bij een groep.
+    </p>
+    <div id="bingo"></div>
+    <button onclick="generateCard()">Genereer nieuwe kaart</button>
 
-    generateCard();
-  </script>
-</body>
+    <script>
+      const items = [
+        // Technische items
+        "Gebruikt AI in het project",
+        "Heeft een werkende mobiele app",
+        "Project gemaakt in Figma",
+        "Maakt gebruik van een API",
+        "Frontend in React of Flutter",
+        "Backend met Node.js of Python",
+        "Data-analyse of dashboards",
+        "Project voor echte opdrachtgever",
+        "Game of simulatie gemaakt",
+        "CI/CD gebruikt",
+        "Project gericht op duurzaamheid",
+        "Team van 3 of meer personen",
+        "Iemand pitchte het project live",
+        "Er is een usability test gedaan",
+        "Er is iets fout gegaan maar goed opgelost",
+        "Gemaakt met een no-code tool",
+        "Iemand gebruikte een Raspberry Pi of sensor",
+        "Bezoekers kunnen iets uitproberen",
+        "Project draait in de cloud",
+        "Student is trots op wat niet gelukt is",
+        "Er zijn gebruikersinterviews gedaan",
+        "Er zit een game-element in",
+        "UX staat centraal in dit project",
+        "Heeft ook een promotievideo of poster",
+        "Bevat een eigen ontworpen logo",
+
+        // Toegankelijke/algemene items
+        "Je kunt hier iets uitproberen",
+        "Ze hebben met echte mensen getest",
+        "Iemand in dit groepje heeft gepitcht",
+        "Ze hebben samen met een bedrijf gewerkt",
+        "Ze hebben het mooi ontworpen in een ontwerpprogramma",
+        "Ze hebben geprobeerd het simpeler te maken",
+        "Je kunt zien wat er met je data gebeurt",
+        "Iemand vertelt graag over de techniek erachter",
+        "Je ziet iets bewegen of reageren op input",
+        "Ze hebben feedback gevraagd aan anderen",
+        "Iemand in dit groepje had nog nooit eerder geprogrammeerd",
+        "Het idee lost een sociaal of maatschappelijk probleem op",
+        "Ze hebben bewust gekozen om iets níet te bouwen",
+        "Er is ook nagedacht over privacy",
+        "Je kunt zélf iets bedienen of klikken",
+        "Er is gewerkt met beelden, geluid of animatie",
+        "Je ziet verschillende schermen of versies",
+        "Ze hebben zelf een logo of naam ontworpen",
+        "Het werkt via het internet (cloud)",
+        "Je krijgt een aanbeveling of persoonlijk advies van de app",
+        "Ze hebben een spelletje of spelelement ingebouwd",
+        "Iemand legt je graag uit hoe het werkt onder de motorkap",
+      ];
+
+      function generateCard() {
+        const shuffled = [...items]
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 24);
+        shuffled.splice(12, 0, "🎯 Vrij vak");
+
+        const grid = document.getElementById("bingo");
+        grid.innerHTML = "";
+
+        shuffled.forEach((text, index) => {
+          const cell = document.createElement("div");
+          cell.className = "cell";
+
+          const label = document.createElement("div");
+          label.textContent = text;
+          cell.appendChild(label);
+
+          if (index !== 12) {
+            const input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "Groepnr";
+            cell.appendChild(input);
+          }
+
+          cell.onclick = (e) => {
+            if (e.target.tagName !== "INPUT") cell.classList.toggle("marked");
+          };
+
+          grid.appendChild(cell);
+        });
+      }
+
+      document.getElementById("close-popup").onclick = function () {
+        document.getElementById("popup").style.display = "none";
+      };
+      // Initial card generation
+
+      generateCard();
+    </script>
+  </body>
 </html>
