@@ -366,8 +366,9 @@
 
         if (success) {
           result.textContent = "🎉 BINGO! Meld je bij de organisatie!";
+          result.style.color = "#4caf50";
           result.classList.add("confetti-pop");
-          launchConfetti(100,5000);
+          launchConfetti(100, 5000);
         } else {
           result.textContent = "Nog geen bingo...";
           result.style.color = "#e53935";
@@ -378,39 +379,34 @@
 
       function checkBingo() {
         const cells = Array.from(document.querySelectorAll("#bingo .cell"));
-        const total = cells.length;
+        let allValid = true;
 
-        // Bepaal kolombreedte op basis van scherm (matching CSS)
-        const isMobile = window.innerWidth <= 600;
-        const columns = isMobile ? 2 : 5;
-        const rows = Math.ceil(total / columns);
+        cells.forEach((cell) => {
+          const isFreeCell = cell.textContent.includes("🎯 Vrij vak");
+          const isMarked = cell.classList.contains("marked");
+          const input = cell.querySelector("input");
 
-        // Bouw matrix van gemarkeerde cellen
-        const marked = Array.from({ length: rows }, (_, i) =>
-          Array.from({ length: columns }, (_, j) => {
-            const index = i * columns + j;
-            return cells[index]?.classList.contains("marked") || false;
-          })
-        );
+          if (isFreeCell) {
+            // Vrij vak negeren
+            return;
+          }
 
-        // Check rijen
-        for (let row of marked) {
-          if (row.every(Boolean)) return showBingoResult(true);
-        }
+          if (!isMarked || !input || input.value.trim() === "") {
+            allValid = false;
 
-        // Check kolommen
-        for (let col = 0; col < columns; col++) {
-          if (marked.every((row) => row[col])) return showBingoResult(true);
-        }
+            // Markeer leeg veld
+            if (input && input.value.trim() === "") {
+              input.style.borderColor = "#e53935";
+              input.style.backgroundColor = "#ffe6e6";
+            }
+          } else {
+            // Reset styling als het veld wel ingevuld is
+            input.style.borderColor = "";
+            input.style.backgroundColor = "";
+          }
+        });
 
-        // Check diagonalen (alleen als het een vierkant is)
-        if (rows === columns) {
-          if (marked.every((row, i) => row[i])) return showBingoResult(true);
-          if (marked.every((row, i) => row[columns - 1 - i]))
-            return showBingoResult(true);
-        }
-
-        return showBingoResult(false);
+        showBingoResult(allValid);
       }
       function launchConfetti(amount = 100, duration = 3000) {
         const colors = [
