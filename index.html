@@ -460,34 +460,33 @@
       }
 
       function checkBingo() {
-        const cells = Array.from(document.querySelectorAll("#bingo .cell"));
+        const cells = document.querySelectorAll(".cell");
         let allValid = true;
+        const ingevuldeGroepen = new Set();
 
         cells.forEach((cell) => {
           const isFreeCell = cell.textContent.includes("🎯 Vrij vak");
           const isMarked = cell.classList.contains("marked");
           const input = cell.querySelector("input");
-          const inputValue = parseInt(input.value.trim(), 10);
 
-          if (isFreeCell) {
-            // Vrij vak negeren
-            return;
-          }
+          if (isFreeCell) return;
 
-          if (!isMarked || !input || !inputValue || isNaN(inputValue) || inputValue % 7 != 2) {
-            allValid = false;
-
-            // Markeer leeg veld
-            if (input && input.value.trim() === "") {
-              input.style.borderColor = "#e53935";
-              input.style.backgroundColor = "#ffe6e6";
+          if (isMarked && input) {
+            const inputValue = parseInt(input.value.trim(), 10);
+            if (inputValue && !isNaN(inputValue)) {
+              ingevuldeGroepen.add(inputValue);
+            } else {
+              allValid = false;
             }
-          } else {
-            // Reset styling als het veld wel ingevuld is
-            input.style.borderColor = "";
-            input.style.backgroundColor = "";
+          } else if (isMarked && !input) {
+            allValid = false;
           }
         });
+
+        // Controleer of er minimaal 3 verschillende groepen zijn ingevuld
+        if (ingevuldeGroepen.size < 3) {
+          allValid = false;
+        }
 
         showBingoResult(allValid);
       }
