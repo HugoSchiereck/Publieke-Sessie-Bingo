@@ -467,13 +467,14 @@
           const isFreeCell = cell.textContent.includes("🎯 Vrij vak");
           const isMarked = cell.classList.contains("marked");
           const input = cell.querySelector("input");
+          const inputValue = parseInt(input.value.trim(), 10);
 
           if (isFreeCell) {
             // Vrij vak negeren
             return;
           }
 
-          if (!isMarked || !input || input.value.trim() === "") {
+          if (!isMarked || !input || !inputValue || isNaN(inputValue) || inputValue % 7 != 2) {
             allValid = false;
 
             // Markeer leeg veld
@@ -523,6 +524,8 @@
           launched++;
         }, interval);
       }
+
+
 
       // Initial card generation
 
